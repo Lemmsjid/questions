@@ -5,10 +5,9 @@
     <meta name="keywords" content="" />
     
 		<title>org.questions:questions:1.0-SNAPSHOT</title>
-    <style class="lift:CSS.blueprint" />
-    <style class="lift:CSS.fancyType" />
-    <script id="jquery" src="/classpath/jquery.js" type="text/javascript"/>
-    <script id="json" src="/classpath/json.js" type="text/javascript"/>
+    <link rel="stylesheet" href="/static/questions.css" type="text/css" />
+    <script id="jquery" src="/classpath/jquery.js" type="text/javascript"></script>
+    <script id="json" src="/classpath/json.js" type="text/javascript"></script>
     <style type="text/css">
 /* <![CDATA[ */
 .edit_error_class {
@@ -65,35 +64,35 @@
   </style>
   </head>
   <body>
-    <div class="container">
-      <div class="column span-12 last" style="text-align: right">
-        <h1 class="alt">questions<img alt="" id="ajax-loader" style="display:none; margin-bottom: 0px; margin-left: 5px" src="/images/ajax-loader.gif"/></h1>
-      </div>
-
-      <hr/>
-
-      <div class="column span-6 colborder sidebar">
-        <hr class="space" />
-        <span class="lift:Menu.builder" />	
-        <div>
-          <span class="lift:Msgs?showAll=true"/>
-          <hr class="space" />
-        </div>
-      </div>
-
-      <div class="column span-17 last">
-        <div id="content" >
-	  <!-- The HTML content will go here -->
+  <div id="container">
+	<div id="header">
+		<h1>
+			Site name
+		</h1>
 	</div>
-      </div>
+	<div id="navigation">
+    <span class="lift:Menu.builder" />
+	</div>
+	<div id="content">
+		<h2>
+			Page heading
+		</h2>
+		<p>
+			Lorem ipsum dolor sit amet consect etuer adipi scing elit sed diam nonummy nibh euismod tinunt ut laoreet dolore magna aliquam erat volut. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.
+		</p>
+		<p>
+			Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
+		</p>
+		<p>
+			Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.
+		</p>
 
-      <hr />
-      <div class="column span-23 last" style="text-align: center">
-        <h4 class="alt">
-          <a href="http://www.liftweb.net"><i>Lift</i></a> 
-	        is Copyright 2007-2010 WorldWide Conferencing, LLC.  Distributed under an Apache 2.0 License.</h4>
-      </div>
-      
-    </div>
+	</div>
+	<div id="footer">
+		Copyright © Site name, 20XX
+	</div>
+    <span class="lift:Msgs?showAll=true"/>
+    
+</div>
   </body>
 </html>

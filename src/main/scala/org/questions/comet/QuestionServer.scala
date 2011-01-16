@@ -10,6 +10,8 @@ import JE._
 import js.jquery.JqJsCmds.{AppendHtml, FadeOut, Hide, FadeIn}
 import java.util.Date
 import scala.xml.{Text, NodeSeq}
+import org.questions.model.{Question, Talk}
+import scala.collection._
 
 /**
  * User: chris
@@ -17,23 +19,21 @@ import scala.xml.{Text, NodeSeq}
  * Time: 12:00 PM
  */
 
-final case class Question(question:String,when:Date = new Date(),guid:String = nextFuncName)
-final case class Remove(guid:String)
+final case class Remove(guid:Long)
 
 object QuestionServer extends LiftActor with ListenerManager {
-  private var questions = Vector(Question("Welcome"))
+  private var talks = new mutable.HashMap[Long,mutable.Set[Question]] with mutable.MultiMap[Long,Question]
 
-  def createUpdate = questions
+
+  def createUpdate = talks
 
   override protected def lowPriority = {
-    case s: String =>{
-      val m = Question(s)
-      questions :+= m
-      updateListeners(m -> questions)
-    }
-    case r @ Remove(guid) => {
-      questions = questions.filterNot(_.guid == guid)
-      updateListeners(r -> questions)
+    case  (id:Long,question:String) =>{
+      val talk = Talk.findByKey(id).get
+      val q = Question.create.text(question).talk(talk)
+      q.save
+      talks.add(id,q)
+      updateListeners(q -> talks)
     }
   }
 }
@@ -47,15 +47,15 @@ class QuestionSession extends CometActor with CometListener {
     case (Remove(guid), v: Vector[Question]) => {
       msgs = v
       partialUpdate(
-        FadeOut(guid,TimeSpan(0),TimeSpan(500)) &
-        After(TimeSpan(500),Replace(guid, NodeSeq.Empty)))
+        FadeOut(guid.toString,TimeSpan(0),TimeSpan(500)) &
+        After(TimeSpan(500),Replace(guid.toString, NodeSeq.Empty)))
     }
 
     case (m: Question, v: Vector[Question]) => {
       msgs = v
       partialUpdate(
         AppendHtml("ul_dude", doLine(m)(("li ^^" #> "^^")(defaultXml))) &
-        Hide(m.guid) & FadeIn(m.guid, TimeSpan(0),TimeSpan(500)))
+        Hide(m.id.get.toString) & FadeIn(m.id.get.toString, TimeSpan(0),TimeSpan(500)))
     }
 
     case v: Vector[Question] => msgs = v; reRender()
@@ -64,11 +64,11 @@ class QuestionSession extends CometActor with CometListener {
   def render = "ul [id]" #> "ul_dude" & "li" #> msgs.map(doLine)
 
   private def doLine(m: Question)(node: NodeSeq) = {
-    ("li [id]" #> m.guid & // set GUID
+    ("li [id]" #> m.id & // set GUID
      // set body
-     "li *" #> (Text(m.question+" ") ++
+     "li *" #> (Text(m.text+" ") ++
                 SHtml.ajaxButton("delete", () => {
-                  QuestionServer ! Remove(m.guid)
+                  QuestionServer ! Remove(m.id.get)
                   Noop
                 })))(node)
   }
@@ -77,7 +77,7 @@ class QuestionSession extends CometActor with CometListener {
     <lift:form>
     {
       SHtml.text("", s => {
-        QuestionServer ! s
+        QuestionServer ! (S.param("id").get.toLong,s)
         SetValById("chat_box", "")
       }, "id" -> "chat_box")
     }

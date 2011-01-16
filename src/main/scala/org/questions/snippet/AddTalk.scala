@@ -22,20 +22,14 @@ object AddTalk {
     def process() = {
       S.notice("got speaker name " + speakerName)
       S.notice("got title " + title)
+
       val talk : Talk = Talk.create.speakerName(speakerName).title(title).user(User.currentUser)
       talk.save()
 
    }
-
-
-    "name=speakerName" #> SHtml.onSubmit(speakerName=_)
-    "title=speakerName" #> SHtml.onSubmit(title=_)
-    "type=submit" #> SHtml.onSubmitUnit(process)
-
-
-
-
-
+    "name=speakerName" #> SHtml.onSubmit(speakerName=_) &
+            "name=title" #> SHtml.onSubmit(title=_) &
+            "type=submit" #> SHtml.onSubmitUnit(process)
   }
 
 }

@@ -23,8 +23,8 @@ class Talks {
           case talks => {
             ("#talk" #> {
               "li" #> talks.map{ talk =>
-                "a [href]" #> ("/talk/" + talk.id) &
-                "a" #> talk.title &
+                "a [href]" #> ("/talks/talk?id=" + talk.id) &
+                "a *" #> talk.title &
                 "#speaker" #> talk.speakerName &
                 "#date" #> talk.createdAt
               }

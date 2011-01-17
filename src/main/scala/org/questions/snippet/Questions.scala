@@ -8,6 +8,7 @@ import Helpers._
 import _root_.scala.xml._
 import org.questions.model.Question
 import net.liftweb.mapper.By
+import net.liftweb.common.Full
 import net.liftweb.util.BindHelpers._
 
 
@@ -19,17 +20,21 @@ import net.liftweb.util.BindHelpers._
 
 class Questions {
   def show(xhtml:NodeSeq) : NodeSeq = {
-    val talkId = S.param("id").get.toLong
-    notice("Found talk " + talkId.toString)
-    val questions : List[Question] = Question.findAll(By(Question.talk,talkId))
-    notice("Found questions: " + questions.length)
+    S.param("id") match {
+      case Full(id) => {
+        notice("Found talk " + id.toString)
+        val questions : List[Question] = Question.findAll(By(Question.talk,id.toLong))
+        notice("Found questions: " + questions.length)
 
-    ("#questions" #> {
-      "li" #> questions.map(q=>
-        "span" #> q.text
-      )
-    }).apply(xhtml)
-
-
+        ("#questions" #> {
+          "li" #> questions.map(q=>
+            "span" #> q.text
+          )
+        }).apply(xhtml)
+      }
+      case _ => {
+        <p>No questions</p>
+      }
+    }
   }
 }

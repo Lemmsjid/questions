@@ -31,7 +31,7 @@ class Boot {
 
     // where to search snippet
     LiftRules.addToPackages("org.questions")
-    Schemifier.schemify(true, Schemifier.infoF _, User, Talk)
+    Schemifier.schemify(true, Schemifier.infoF _, User, Talk,Question)
 
     // Build SiteMap
     def sitemap() = SiteMap(

@@ -9,6 +9,7 @@ class Question extends LongKeyedMapper[Question] with CreatedUpdated with IdPK {
   object text extends MappedString(this, 160)
   object talk extends LongMappedMapper(this, Talk)
   object votes extends MappedInt(this)
+  object questionerName extends MappedString(this,160)
 }
 
 object Question extends Question with LongKeyedMetaMapper[Question] {

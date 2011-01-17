@@ -1,9 +1,29 @@
 <div class="lift:surround?with=default;at=content">
   <h2>Talk</h2>
-  <div class="lift:comet?type=QuestionSession">
-    <ul>
-      <li>line</li>
+
+  <!---->
+  <!--<div class="lift:comet?type=QuestionSession">-->
+    <!--<ul>-->
+      <!--<li>No questions yet</li>-->
+    <!--</ul>-->
+
+  <!--</div>-->
+  <div class="lift:Questions.show">
+    <ul id="questions">
+      <li>
+        <span>Title here</span>
+      </li>
     </ul>
   </div>
-</div>
 
+  <div>
+    <form class="lift:AddQuestion?form=post">
+      Question: <input name="text" /><br />
+      Your Name: <input name="questionerName" /><br />
+      <input type="hidden" name="talkId" />
+
+      <input value="Submit" type="submit" />
+   </form>
+  </div>
+
+</div>
